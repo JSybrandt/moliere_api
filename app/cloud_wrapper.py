@@ -1,9 +1,11 @@
 # This is a lib file
 
+import json
+import logging
 import os
 import re
-from google.cloud import datastore
 import datetime
+from google.cloud import datastore
 
 QUERY_STATUSES = ['queued', 'running', 'error', 'done']
 QUERY_KIND = 'query'
