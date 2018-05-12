@@ -5,7 +5,7 @@ import logging
 import os
 import re
 import datetime
-from cloud_wrapper import *
+from app.cloud_wrapper import *
 
 from flask import request, render_template
 
@@ -17,19 +17,15 @@ client = get_client(RW_KEY_PATH)
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def main_form():
-    return render_template('query_submission_form.html')
+    if request.method == 'POST':
+        query()
+    else:
+        return render_template('query_submission_form.html')
 
 @app.route('/result')
 def results():
-    """
-    Returns status object
-    Returns N/A if doesn't exist
-    args:
-        keywords = comma-sep keyword list
-        num_topics = positive # of topics
-    """
     keywords = request.args.get('keywords')
     keywords = keywords.strip().split(',')
     num_topics = int(request.args.get('num_topics'))
@@ -46,7 +42,6 @@ def results():
 
 @app.route('/query')
 def query():
-
     keywords = request.args.get('keywords')
     keywords = urllib.unquote(keywords).decode('utf8') 
     keywords = keywords.strip().split(',')
