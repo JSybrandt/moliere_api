@@ -75,7 +75,7 @@ def enqueue(client, query_words, num_topics, cloud_size, email):
     return new_q
 
 
-def get_entity(client, query_words, num_topics):
+def search_entity(client, query_words, num_topics):
     query = client.query(kind=QUERY_KIND)
     query.add_filter('keywords', '=', ",".join(query_words))
     query.add_filter('num_topics', '=', num_topics)
@@ -85,7 +85,12 @@ def get_entity(client, query_words, num_topics):
     return res[0]
 
 
-
-def exists(client, query_words, num_topics):
-    return get_entity(client, query_words, num_topics) is not None
+def get_from_id(client, idx):
+    query = client.query(kind=QUERY_KIND)
+    key = client.key(QUERY_KIND, int(idx))
+    query.key_filter(key)
+    res = list(query.fetch())
+    if len(res) == 0:
+        return None
+    return res[0]
 
