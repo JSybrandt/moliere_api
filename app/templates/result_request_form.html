@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<H1>Submit a Moliere Query</H1>
-  <form method="post" action="/query">
+	<H1>Get Data From A Moliere Query</H1>
+  <form method="get" action="/result">
     Keyword List: (no spaces, comma sep)
     <input type="text" name="keywords" value="tobacco,cancer">
     <hr>
     Number of Topics:
     <input type="number" name="num_topics" min=2 max=100 value=20>
-    <hr>
-    Cloud Size:
-    <input type="number" name="cloud_size" min=1000 max=10000 value=5000>
     <hr>
     <input type="submit" value="Submit">
   </form>

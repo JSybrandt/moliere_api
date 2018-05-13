@@ -72,6 +72,8 @@ def enqueue(client, query_words, num_topics, cloud_size, email):
             })
         client.put(new_q)
 
+    return new_q
+
 
 def get_entity(client, query_words, num_topics):
     query = client.query(kind=QUERY_KIND)
