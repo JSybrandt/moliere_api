@@ -7,7 +7,7 @@ import re
 import datetime
 from app.cloud_wrapper import *
 
-from flask import request, render_template, abort
+from flask import request, render_template, abort, jsonify
 
 import urllib
 
@@ -30,7 +30,7 @@ def results():
         try:
             entity = get_from_id(client, request.args.get('query_id'))
             if entity:
-                return json.dumps(entity, default=str)
+                return jsonify(entity)
         except:
             pass
         abort(404)
@@ -43,7 +43,6 @@ def results():
 def query():
     if request.method == 'POST':
         keywords = request.form.get('keywords')
-        # keywords = urllib.unquote(keywords).decode('utf8') 
         keywords = keywords.strip().split(',')
         num_topics = request.form.get('num_topics')
         cloud_size = request.form.get('cloud_size')
@@ -51,7 +50,7 @@ def query():
         if 'email' in request.form:
             email = request.form.get('email')
         obj = enqueue(client, keywords, num_topics, cloud_size, email)
-        return str(obj.key.id)
+        return jsonify({"query_id": str(obj.key.id)})
     else:
         return render_template('query_submission_form.html')
 
