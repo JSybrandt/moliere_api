@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<H1>Submit a Moliere Query</H1>
-  <form method="post" action="/api/query">
-    Keyword List: (no spaces, comma sep)
-    <input type="text" name="keywords" value="tobacco,cancer">
-    <hr>
-    Number of Topics:
-    <input type="number" name="num_topics" min=2 max=100 value=20>
-    <hr>
-    Cloud Size:
-    <input type="number" name="cloud_size" min=1000 max=10000 value=5000>
-    <hr>
-    <input type="submit" value="Submit">
-  </form>
+<form method='post' action='api/query'>
+  <div class="form-group">
+    <label for="keywords">Keywords</label>
+    <input type="text" class="form-control" id="keywords" name="keywords" aria-describedby="keywordHelp">
+    <small id="keywordHelp" class="form-text">Enter two keywords separated by a comma.</small>
+  </div>
+  <div class="form-group">
+    <label for="num_topics">Number of Topics</label>
+    <input type="number"
+           class="form-control" id="num_topics" name="num_topics">
+  </div>
+  <div class="form-group">
+    <label for="cloud_size">Cloud Size</label>
+    <input type="number" class="form-control" id="cloud_size" name="cloud_size">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}
+
+

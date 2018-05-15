@@ -1,19 +1,8 @@
 from app import app
 
-import json
 import logging
-import os
-import re
-import datetime
-from app.cloud_wrapper import *
 
-from flask import request, render_template, abort, jsonify
-
-import urllib
-
-
-RW_KEY_PATH="keys/datastore-rw.key.json"
-client = get_client(RW_KEY_PATH)
+from flask import render_template, abort
 
 
 # Show Demo Page For API
@@ -24,35 +13,15 @@ def main_form():
 
 
 # Get results from an existing query
-@app.route('/api/result', methods=['GET'])
-def results():
-    if 'query_id' in request.args:
-        try:
-            entity = get_from_id(client, request.args.get('query_id'))
-            if entity:
-                return jsonify(entity)
-        except:
-            pass
-        abort(404)
-    else:
-        return render_template('result_request_form.html')
+@app.route('/result')
+def result():
+    return render_template('result_request_form.html')
 
 
 # Submit a new query using POST
-@app.route('/api/query', methods=['GET', 'POST'])
+@app.route('/query')
 def query():
-    if request.method == 'POST':
-        keywords = request.form.get('keywords')
-        keywords = keywords.strip().split(',')
-        num_topics = request.form.get('num_topics')
-        cloud_size = request.form.get('cloud_size')
-        email = None
-        if 'email' in request.form:
-            email = request.form.get('email')
-        obj = enqueue(client, keywords, num_topics, cloud_size, email)
-        return jsonify({"query_id": str(obj.key.id)})
-    else:
-        return render_template('query_submission_form.html')
+    return render_template('query_submission_form.html')
 
 @app.errorhandler(500)
 def server_error(e):
