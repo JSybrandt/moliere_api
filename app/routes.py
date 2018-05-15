@@ -24,7 +24,7 @@ def main_form():
 
 
 # Get results from an existing query
-@app.route('/result', methods=['GET'])
+@app.route('/api/result', methods=['GET'])
 def results():
     if 'query_id' in request.args:
         try:
@@ -39,7 +39,7 @@ def results():
 
 
 # Submit a new query using POST
-@app.route('/query', methods=['GET', 'POST'])
+@app.route('/api/query', methods=['GET', 'POST'])
 def query():
     if request.method == 'POST':
         keywords = request.form.get('keywords')
