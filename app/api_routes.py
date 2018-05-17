@@ -1,4 +1,5 @@
 from app import app
+from app import client
 
 import json
 import logging
@@ -9,8 +10,6 @@ from app.cloud_wrapper import *
 
 from flask import request, abort, jsonify
 
-RW_KEY_PATH="keys/datastore-rw.key.json"
-client = get_client(RW_KEY_PATH)
 
 
 # Get results from an existing query

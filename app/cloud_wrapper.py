@@ -5,10 +5,14 @@ import logging
 import os
 import re
 import datetime
+import pytz
 from google.cloud import datastore
 
 QUERY_STATUSES = ['queued', 'running', 'error', 'done']
 QUERY_KIND = 'query'
+HEARTBEAT_KIND = 'heartbeat'
+
+DEAD_TIMEOUT = datetime.timedelta(seconds=60)
 
 EMAIL_RE = re.compile(r'[^@]+@[^@]+\.[^@]+')
 
@@ -93,4 +97,19 @@ def get_from_id(client, idx):
     if len(res) == 0:
         return None
     return res[0]
+
+
+def get_compute_status(client):
+    "returns tuple of isAlive and status_str"
+    query = client.query(kind=HEARTBEAT_KIND)
+    # order by time in decreasing order (most recent first)
+    query.order = ['-time']
+    res = list(query.fetch())
+    current_time = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
+    if len(res) == 0:
+        return False, ""
+    last_hb = res[0]['time']
+    if current_time - last_hb > DEAD_TIMEOUT:
+        return False, "timeout"
+    return True, res[0]['status']
 

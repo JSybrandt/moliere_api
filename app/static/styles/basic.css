@@ -29,3 +29,15 @@ body {
   height: 100%;
 }
 
+.vspace {
+  height: 50px;
+}
+.svspace {
+  height: 25px;
+}
+
+.svg-logo {
+  width:60%;
+  height:auto;
+
+}
