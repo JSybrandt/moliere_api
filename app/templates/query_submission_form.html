@@ -1,24 +1,48 @@
 {% extends "base.html" %}
 
+{% block includes %}
+{% endblock %}
+
 {% block content %}
 <form method='post' action='api/query'>
   <div class="form-group row">
-    <label for="keywords" class="col-md-4">Keywords</label>
-    <input type="text" class="form-control col-md-8" id="keywords" name="keywords" aria-describedby="keywordHelp">
-    <small id="keywordHelp" class="form-text">Enter two keywords separated by a comma.</small>
+
+    <label for="keyword1"
+           class="col-md-2 text-right align-middle">Term 1:</label>
+    <input type="text"
+           class="form-control col-md-4"
+           id="keyword1"
+           name="keyword1">
+    <label for="keyword2"
+           class="col-md-2 text-right align-middle">Term 2:</label>
+    <input type="text"
+           class="form-control col-md-4"
+           id="keyword2"
+           name="keyword2">
   </div>
   <div class="form-group row">
-    <label for="num_topics" class="col-md-4">Number of Topics</label>
+    <label for="num_topics"
+           class="col-md-2 text-right align-middle"># Topics:</label>
     <input type="number"
-           class="form-control col-md-8"
+           class="form-control col-md-10"
            id="num_topics"
-           name="num_topics">
+           name="num_topics"
+           value=20>
   </div>
   <div class="form-group row">
-    <label for="cloud_size" class="col-md-4">Cloud Size</label>
-    <input type="number" class="form-control col-md-8" id="cloud_size" name="cloud_size">
+    <label for="email"
+           class="col-md-2 text-right align-middle">Email:</label>
+    <input type="email"
+           class="form-control col-md-10"
+           id="email"
+           name="email">
   </div>
-  <button type="submit" class="btn btn-primary col-md-4">Submit</button>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <button type="submit" class="btn btn-primary col-md-10">
+      Submit
+    </button>
+  </div>
 </form>
 {% endblock %}
 
