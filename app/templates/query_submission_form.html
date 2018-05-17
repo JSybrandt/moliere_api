@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
-{% block includes %}
+<!--
+  This file contains the query submission form.
+  The included script is responsible for turning #query-form
+  into an ajax form, and places the results in #query-response
+-->
+
+{% block js_includes %}
+<script src={{url_for('static', filename='scripts/stemmer.js')}}></script>
+<script src={{url_for('static', filename='scripts/query_form.js')}}></script>
 {% endblock %}
 
 {% block content %}
-<form method='post' action='api/query'>
+<form method='post' action='/api/query' id="query-form">
   <div class="form-group row">
 
     <label for="keyword1"
@@ -42,6 +50,11 @@
     <button type="submit" class="btn btn-primary col-md-10">
       Submit
     </button>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 svspace"></div>
+  </div>
+  <div class="row" id="query-response">
   </div>
 </form>
 {% endblock %}
